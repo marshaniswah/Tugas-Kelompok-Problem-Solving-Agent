@@ -1,0 +1,138 @@
+{
+  "project_name": "Bin Packing Problem Optimization (1D-BPP)",
+  "benchmark": {
+    "suite": "Falkenauer_U",
+    "source_name": "BPPLIB (Delorme, Iori, & Martello, 2018)",
+    "source_url": "https://site.unibo.it/operations-research/en/research/bpplib-a-bin-packing-problem-library",
+    "github_url": "https://github.com/mdelorme2/BPPLIB",
+    "data_dir": "data/Falkenauer_U",
+    "instances": [
+      {
+        "filename": "Falkenauer_u120_00.txt",
+        "items": 120,
+        "capacity": 150,
+        "bks": 48,
+        "status": "Solved",
+        "reference": "Falkenauer (1996), BPPLIB"
+      },
+      {
+        "filename": "Falkenauer_u120_01.txt",
+        "items": 120,
+        "capacity": 150,
+        "bks": 49,
+        "status": "Solved",
+        "reference": "Falkenauer (1996), BPPLIB"
+      },
+      {
+        "filename": "Falkenauer_u120_02.txt",
+        "items": 120,
+        "capacity": 150,
+        "bks": 46,
+        "status": "Solved",
+        "reference": "Falkenauer (1996), BPPLIB"
+      },
+      {
+        "filename": "Falkenauer_u120_03.txt",
+        "items": 120,
+        "capacity": 150,
+        "bks": 49,
+        "status": "Solved",
+        "reference": "Falkenauer (1996), BPPLIB"
+      },
+      {
+        "filename": "Falkenauer_u120_04.txt",
+        "items": 120,
+        "capacity": 150,
+        "bks": 50,
+        "status": "Solved",
+        "reference": "Falkenauer (1996), BPPLIB"
+      }
+    ]
+  },
+  "experimental_protocol": {
+    "seeds": [11, 22, 33, 44, 55],
+    "evaluation_budget": 6000,
+    "quick_seeds": [11, 22],
+    "quick_evaluation_budget": 500
+  },
+  "algorithms": {
+    "ffd": {
+      "name": "First Fit Decreasing",
+      "deterministic": true
+    },
+    "ga": {
+      "name": "Genetic Algorithm",
+      "representation": "item_index_permutation",
+      "decoder": "first_fit",
+      "population_size": 50,
+      "tournament_size": 3,
+      "crossover_operator": "order_crossover_ox",
+      "crossover_rate": 0.90,
+      "mutation_operator": "swap_mutation",
+      "mutation_rate": 0.20,
+      "elitism_count": 1,
+      "evaluation_budget": 6000
+    },
+    "pso": {
+      "name": "Particle Swarm Optimization",
+      "representation": "continuous_position_vector",
+      "decoding_mapping": "argsort_to_item_permutation_first_fit",
+      "population_size": 50,
+      "inertia_weight_w": 0.7,
+      "cognitive_coeff_c1": 1.5,
+      "social_coeff_c2": 1.5,
+      "velocity_min": -0.2,
+      "velocity_max": 0.2,
+      "position_min": 0.0,
+      "position_max": 1.0,
+      "evaluation_budget": 6000
+    }
+  },
+  "ga_variations": {
+    "description": "Comparison of GA operator variations under identical budget and seeds",
+    "target_instance": "Falkenauer_u120_00.txt",
+    "configurations": [
+      {
+        "name": "GA_mutation_0.20_standard",
+        "mutation_rate": 0.20,
+        "crossover_rate": 0.90
+      },
+      {
+        "name": "GA_mutation_0.05_low",
+        "mutation_rate": 0.05,
+        "crossover_rate": 0.90
+      }
+    ]
+  },
+  "ga_sensitivity_analysis": {
+    "pilot_instance": "Falkenauer_u120_00.txt",
+    "population_sizes": [20, 30, 40, 50, 60],
+    "mutation_rates": [0.01, 0.05, 0.10, 0.20],
+    "tournament_sizes": [2, 3, 4, 5],
+    "crossover_rates": [0.70, 0.80, 0.90, 1.00]
+  },
+  "sensitivity_analysis": {
+    "pilot_instance": "Falkenauer_u120_04.txt",
+    "pso_w_values": [0.4, 0.7, 0.9],
+    "pso_c1_c2_configs": [
+      {"config": "baseline", "c1": 1.5, "c2": 1.5},
+      {"config": "c1_low",   "c1": 1.0, "c2": 1.5},
+      {"config": "c1_high",  "c1": 2.0, "c2": 1.5},
+      {"config": "c2_low",   "c1": 1.5, "c2": 1.0},
+      {"config": "c2_high",  "c1": 1.5, "c2": 2.0}
+    ]
+  },
+  "statistical_testing": {
+    "primary_test": "wilcoxon_signed_rank",
+    "alternative_test": "paired_t_test",
+    "alpha": 0.05,
+    "p_adjustment_method": "holm",
+    "alternative": "two-sided"
+  },
+  "paths": {
+    "raw_dir": "results/raw",
+    "summaries_dir": "results/summaries",
+    "figures_dir": "results/figures",
+    "reports_tables_dir": "reports/tables"
+  }
+}

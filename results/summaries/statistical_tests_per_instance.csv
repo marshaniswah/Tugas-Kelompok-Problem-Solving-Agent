@@ -1,0 +1,6 @@
+instance,n_pairs,mean_GA,mean_PSO,mean_diff,sd_diff,wilcoxon_stat,wilcoxon_p_raw,paired_t_stat,paired_t_p_raw,performance_note,wilcoxon_p_adj_holm,paired_t_p_adj_holm,significant_wilcoxon_adj,significant_t_adj
+Falkenauer_u120_00.txt,5,49.0,50.0,-1.0,0.0,0.0,0.0625,-inf,0.0,"GA better (5), PSO better (0), tied (0)",0.3125,0.0,False,True
+Falkenauer_u120_01.txt,5,50.0,50.0,0.0,0.0,0.0,1.0,0.0,1.0,Identical performance across all seeds,1.0,1.0,False,False
+Falkenauer_u120_02.txt,5,47.0,47.2,-0.2,0.447,0.0,0.3173,-1.0,0.3739,"GA better (1), PSO better (0), tied (4)",1.0,1.0,False,False
+Falkenauer_u120_03.txt,5,50.8,51.0,-0.2,0.447,0.0,0.3173,-1.0,0.3739,"GA better (1), PSO better (0), tied (4)",1.0,1.0,False,False
+Falkenauer_u120_04.txt,5,51.0,51.0,0.0,0.0,0.0,1.0,0.0,1.0,Identical performance across all seeds,1.0,1.0,False,False

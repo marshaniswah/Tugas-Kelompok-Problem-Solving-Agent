@@ -1,0 +1,6 @@
+config,n_runs,bks,best,mean,sd,worst,mean_gap_percent,mean_runtime_seconds,evaluations,all_valid
+baseline,5,,51,51.0,0.0,51,,1.6567,6000,True
+c1_low,5,,51,51.0,0.0,51,,1.4921,6000,True
+c1_high,5,,51,51.0,0.0,51,,1.2623,6000,True
+c2_low,5,,51,51.0,0.0,51,,1.3416,6000,True
+c2_high,5,,51,51.0,0.0,51,,1.2906,6000,True
