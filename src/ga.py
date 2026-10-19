@@ -305,3 +305,179 @@ def run_genetic_algorithm(
         "mutation_rate": mutation_rate,
         "crossover_rate": crossover_rate,
     }
+
+
+def run_genetic_algorithm_stepped(
+    weights: Union[List[int], np.ndarray],
+    capacity: int,
+    population_size: int = 30,
+    generations: int = 30,
+    tournament_size: int = 3,
+    mutation_rate: float = 0.20,
+    crossover_rate: float = 0.90,
+    elitism: bool = True,
+    seed: Optional[int] = 42,
+    bks: Optional[int] = None
+) -> Dict:
+    """
+    Generation-by-generation Genetic Algorithm solver for interactive visualization.
+    Records snapshots of each generation including population fitness distribution,
+    best chromosome, and decoded packing layout.
+    """
+    if population_size < 2:
+        raise ValueError("Population size must be at least 2.")
+    if tournament_size < 1 or tournament_size > population_size:
+        tournament_size = min(max(1, tournament_size), population_size)
+
+    start_time = time.perf_counter()
+    rng = random.Random(seed)
+    n_items = len(weights)
+
+    # 1. Initialize Generation 0
+    population = initialize_population(
+        n_items=n_items,
+        pop_size=population_size,
+        rng=random.Random(rng.randrange(0, 2**32))
+    )
+
+    fitness_values = [
+        evaluate_chromosome(chrom, weights, capacity)
+        for chrom in population
+    ]
+    evaluations = population_size
+
+    best_idx = min(range(population_size), key=lambda i: fitness_values[i])
+    best_chromosome = population[best_idx].copy()
+    best_fitness = fitness_values[best_idx]
+
+    best_bins, bin_loads = decode_permutation(best_chromosome, weights, capacity)
+
+    generations_data = [
+        {
+            "generation": 0,
+            "evaluations": evaluations,
+            "best_fitness": best_fitness,
+            "best_chromosome": best_chromosome.copy(),
+            "best_bins": [b.copy() for b in best_bins],
+            "bin_loads": list(bin_loads),
+            "mean_fitness": float(np.mean(fitness_values)),
+            "min_fitness": int(np.min(fitness_values)),
+            "max_fitness": int(np.max(fitness_values)),
+            "fitness_distribution": list(fitness_values),
+            "description": (
+                f"**Generasi 0 (Inisialisasi Acak)**: Membangkitkan {population_size} kromosom permutasi. "
+                f"Solusi acak terbaik awal membutuhkan **{best_fitness} bin** (Rata-rata: {np.mean(fitness_values):.1f} bin)."
+            )
+        }
+    ]
+
+    convergence = [best_fitness]
+    mean_history = [float(np.mean(fitness_values))]
+
+    # 2. Generational Evolution Loop
+    for gen in range(1, generations + 1):
+        prev_best = best_fitness
+        next_population = [best_chromosome.copy()] if elitism else []
+
+        while len(next_population) < population_size:
+            p1 = tournament_selection(
+                population, fitness_values, tournament_size,
+                rng=random.Random(rng.randrange(0, 2**32))
+            )
+            p2 = tournament_selection(
+                population, fitness_values, tournament_size,
+                rng=random.Random(rng.randrange(0, 2**32))
+            )
+
+            if rng.random() < crossover_rate and n_items >= 2:
+                cut1, cut2 = sorted(rng.sample(range(n_items), 2))
+                child = order_crossover(p1, p2, cut1, cut2)
+            else:
+                child = p1.copy()
+
+            child = swap_mutation(
+                child, mutation_rate,
+                rng=random.Random(rng.randrange(0, 2**32))
+            )
+            next_population.append(child)
+
+        population = next_population
+        fitness_values = [
+            evaluate_chromosome(chrom, weights, capacity)
+            for chrom in population
+        ]
+        evaluations += len(population)
+
+        curr_best_idx = min(range(population_size), key=lambda i: fitness_values[i])
+        curr_best = fitness_values[curr_best_idx]
+
+        improved = False
+        if curr_best < best_fitness:
+            best_fitness = curr_best
+            best_chromosome = population[curr_best_idx].copy()
+            best_bins, bin_loads = decode_permutation(best_chromosome, weights, capacity)
+            improved = True
+
+        convergence.append(best_fitness)
+        mean_history.append(float(np.mean(fitness_values)))
+
+        if improved:
+            desc = (
+                f"✨ **Peningkatan Ditemukan di Generasi {gen}**! Solusi terbaik berkurang dari {prev_best} menjadi **{best_fitness} bin**. "
+                f"Kombinasi crossover & mutasi berhasil mengeliminasi ruang kosong (slack)."
+            )
+        else:
+            desc = (
+                f"**Generasi {gen}**: Seleksi turnamen (k={tournament_size}), OX crossover (p_c={crossover_rate:.2f}), "
+                f"dan mutasi swap (p_m={mutation_rate:.2f}). Solusi terbaik bertahan pada **{best_fitness} bin** (Rata-rata: {np.mean(fitness_values):.1f} bin)."
+            )
+
+        generations_data.append({
+            "generation": gen,
+            "evaluations": evaluations,
+            "best_fitness": best_fitness,
+            "best_chromosome": best_chromosome.copy(),
+            "best_bins": [b.copy() for b in best_bins],
+            "bin_loads": list(bin_loads),
+            "mean_fitness": float(np.mean(fitness_values)),
+            "min_fitness": int(np.min(fitness_values)),
+            "max_fitness": int(np.max(fitness_values)),
+            "fitness_distribution": list(fitness_values),
+            "description": desc
+        })
+
+    runtime = time.perf_counter() - start_time
+
+    valid, msg = validate_packing_solution(
+        bins=best_bins,
+        weights=weights,
+        capacity=capacity,
+        reported_bins=best_fitness
+    )
+
+    gap_percent = None
+    if bks is not None and bks > 0:
+        gap_percent = (best_fitness - bks) / bks * 100.0
+
+    return {
+        "best_chromosome": best_chromosome,
+        "best_bins": best_bins,
+        "bin_loads": bin_loads,
+        "best_fitness": best_fitness,
+        "evaluations": evaluations,
+        "generations_completed": generations,
+        "generations_data": generations_data,
+        "convergence": convergence,
+        "mean_fitness_history": mean_history,
+        "runtime_seconds": runtime,
+        "valid": valid,
+        "validation_message": msg,
+        "seed": seed,
+        "gap_percent": gap_percent,
+        "population_size": population_size,
+        "tournament_size": tournament_size,
+        "mutation_rate": mutation_rate,
+        "crossover_rate": crossover_rate,
+        "elitism": elitism
+    }
+

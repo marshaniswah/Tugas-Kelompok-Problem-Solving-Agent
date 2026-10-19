@@ -13,7 +13,7 @@ from pathlib import Path
 
 def main():
     root = Path(__file__).resolve().parent
-    notebook_path = root / "bpp_experiments_indonesia.ipynb"
+    notebook_path = root / "code.ipynb"
     
     print("=" * 70)
     print("🚀 MEMULAI EKSEKUSI REPRODUKSI 1D BIN PACKING PROBLEM (1D-BPP)")

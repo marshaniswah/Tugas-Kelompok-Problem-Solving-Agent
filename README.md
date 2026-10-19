@@ -44,9 +44,9 @@ python run_all.py
 
 Atau buka dan jalankan notebook utama langsung di Jupyter / VS Code:
 ```bash
-jupyter notebook bpp_experiments_indonesia.ipynb
+jupyter notebook code.ipynb
 ```
-*(Seluruh sel di dalam `bpp_experiments_indonesia.ipynb` telah dirancang **runut dan mandiri (*self-contained*)** tanpa memanggil modul dari folder eksternal, sehingga dapat langsung dieksekusi dari awal hingga akhir via menu **Run All Cells**).*
+*(Seluruh sel di dalam `code.ipynb` telah dirancang **runut dan mandiri (*self-contained*)** tanpa memanggil modul dari folder eksternal, sehingga dapat langsung dieksekusi dari awal hingga akhir via menu **Run All Cells**).*
 
 ---
 
@@ -67,7 +67,7 @@ Semua parameter eksperimen dan *random seeds* tersimpan secara terpusat pada ber
 `config/experiment_config.json`
 
 ```text
-├── bpp_experiments_indonesia.ipynb  # Notebook utama laporan mandiri (Bahasa Indonesia)
+├── code.ipynb                       # Notebook utama laporan mandiri (Bahasa Indonesia)
 ├── app.py                           # Aplikasi Live Demo Interaktif (Streamlit)
 ├── run_all.py                       # Script reproduksi otomatis 1-perintah
 ├── requirements.txt                 # Daftar pustaka yang dibutuhkan
