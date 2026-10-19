@@ -603,7 +603,7 @@ with tab_comp:
         )
         st.plotly_chart(fig_time, use_container_width=True)
 
-    st.markdown("""
+    st.markdown(r"""
     **Insight Komparatif**:
     1. **First Fit Decreasing (FFD)** merupakan heuristik deterministik $O(n \log n)$ yang sangat cepat (<0.001s). Pada instance uniform Falkenauer, pengurutan bobot secara menurun memberikan penataan awal yang sangat padat.
     2. **Genetic Algorithm (GA)** secara konsisten mengungguli PSO karena representasi permutasi langsung dengan **Order Crossover (OX)** mempertahankan blok urutan parsial antar generasi, sementara **Swap Mutation ($p_m = 0.20$)** menjaga diversitas genetik.
@@ -625,16 +625,16 @@ with tab_val:
     st.success(f"✅ **Audit PSO**: {v_pso_msg}")
     st.success(f"✅ **Audit FFD**: {v_ffd_msg}")
 
-    st.markdown("""
+    st.markdown(f"""
     ---
     ### Formulasi 1D Bin Packing Problem (1D-BPP)
-    $$\\min \\quad m = \\sum_{j=1}^m y_j$$
-    $$\\text{subject to:} \\quad \\sum_{i=0}^{n-1} w_i x_{ij} \\le C y_j, \\quad \\forall j \\in \\{1, \\dots, m\\}$$
-    $$\\sum_{j=1}^m x_{ij} = 1, \\quad \\forall i \\in \\{0, \\dots, n-1\\}$$
-    $$x_{ij} \\in \\{0, 1\\}, \\quad y_j \\in \\{0, 1\\}$$
+    $$\\min \\quad m = \\sum_{{j=1}}^m y_j$$
+    $$\\text{{subject to:}} \\quad \\sum_{{i=0}}^{{n-1}} w_i x_{{ij}} \\le C y_j, \\quad \\forall j \\in \\{{1, \\dots, m\\}}$$
+    $$\\sum_{{j=1}}^m x_{{ij}} = 1, \\quad \\forall i \\in \\{{0, \\dots, n-1\\}}$$
+    $$x_{{ij}} \\in \\{{0, 1\\}}, \\quad y_j \\in \\{{0, 1\\}}$$
 
     ### Batas Bawah Kontinu (Volume Lower Bound $L_1$)
-    $$L_1 = \\left\\lceil \\frac{\\sum_{i=0}^{n-1} w_i}{C} \\right\\rceil = \\left\\lceil \\frac{""" + f"{total_weight:,}" + f"""}{""" + f"{capacity}" + f"""} \\right\\rceil = {vol_lower_bound}$$
+    $$L_1 = \\left\\lceil \\frac{{\\sum_{{i=0}}^{{n-1}} w_i}}{{C}} \\right\\rceil = \\left\\lceil \\frac{{{total_weight:,}}}{{{capacity}}} \\right\\rceil = {vol_lower_bound}$$
 
     ### Rumus Gap Persentase terhadap BKS
     $$\\text{{Gap (\\%)}} = \\frac{{\\text{{Hasil}} - \\text{{BKS}}}}{{\\text{{BKS}}}} \\times 100\\%$$
