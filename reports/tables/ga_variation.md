@@ -1,4 +1,0 @@
-| configuration             |   n_runs | bks   |   best |   mean |   sd |   worst |   mean_gap_percent |   mean_runtime_seconds |   evaluations | all_valid   |
-|:--------------------------|---------:|:------|-------:|-------:|-----:|--------:|-------------------:|-----------------------:|--------------:|:------------|
-| GA_mutation_0.20_standard |        5 |       |     49 |     49 |    0 |      49 |             2.0833 |                 1.4523 |          6000 | True        |
-| GA_mutation_0.05_low      |        5 |       |     49 |     49 |    0 |      49 |             2.0833 |                 1.4394 |          6000 | True        |

@@ -1,6 +1,0 @@
-algorithm,instance,seed,best_bins,bks,gap_percent,evaluations,runtime_seconds,valid
-FFD,Falkenauer_u120_00.txt,,49,48,2.083333333333333,1,0.00019589999965319294,True
-FFD,Falkenauer_u120_01.txt,,49,49,0.0,1,0.0001843999998527579,True
-FFD,Falkenauer_u120_02.txt,,47,46,2.1739130434782608,1,0.00017430000025342451,True
-FFD,Falkenauer_u120_03.txt,,50,49,2.0408163265306123,1,0.00018829999999070424,True
-FFD,Falkenauer_u120_04.txt,,50,50,0.0,1,0.00017579999985173345,True

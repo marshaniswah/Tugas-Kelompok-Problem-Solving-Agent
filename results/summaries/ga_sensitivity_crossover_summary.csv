@@ -1,5 +1,0 @@
-crossover_rate,n_runs,bks,best,mean,sd,worst,mean_gap_percent,mean_runtime_seconds,evaluations,all_valid
-0.7,5,,49,49.4,0.5477,50,2.9167,3.2064,6000,True
-0.8,5,,49,49.2,0.4472,50,2.5,3.3341,6000,True
-0.9,5,,49,49.0,0.0,49,2.0833,3.234,6000,True
-1.0,5,,49,49.2,0.4472,50,2.5,3.1135,6000,True

@@ -2,7 +2,7 @@
 
 **Mata Kuliah:** AI5103 Fundamental of AI & Data Science  
 **Tugas:** Problem Solving Agent — Tugas Kelompok  
-**Anggota Kelompok:** Marshaniswah Syamsul, dkk.  
+**Anggota Kelompok:** Marshaniswah Syamsul, Hasna Putri Priswati.  
 **Repository GitHub:** [https://github.com/marshaniswah/Tugas-Kelompok-Problem-Solving-Agent.git](https://github.com/marshaniswah/Tugas-Kelompok-Problem-Solving-Agent.git)
 
 ---
@@ -46,29 +46,17 @@ Atau buka dan jalankan notebook utama langsung di Jupyter / VS Code:
 ```bash
 jupyter notebook code.ipynb
 ```
-*(Seluruh sel di dalam `code.ipynb` telah dirancang **runut dan mandiri (*self-contained*)** tanpa memanggil modul dari folder eksternal, sehingga dapat langsung dieksekusi dari awal hingga akhir via menu **Run All Cells**).*
+*(Seluruh sel di dalam `code.ipynb` telah dibuat **runut dan mandiri (*self-contained*)** tanpa memanggil modul dari folder eksternal, sehingga dapat langsung dieksekusi dari awal hingga akhir via menu **Run All**).*
 
 ---
 
-## 🌐 3. Cara Menjalankan Live Demo Interaktif (Streamlit)
-
-Aplikasi demonstrasi interaktif visualizer (tampilan solusi balok bin, kurva konvergensi animasi bergerak, dan komparasi instan) dapat dijalankan dengan perintah:
-
-```bash
-streamlit run app.py
-```
-Aplikasi akan otomatis terbuka di browser pada alamat `http://localhost:8501`.
-
----
-
-## 📁 4. Struktur Berkas & Konfigurasi Parameter
+## 📁 3. Struktur Berkas & Konfigurasi Parameter
 
 Semua parameter eksperimen dan *random seeds* tersimpan secara terpusat pada berkas konfigurasi:
 `config/experiment_config.json`
 
 ```text
 ├── code.ipynb                       # Notebook utama laporan mandiri (Bahasa Indonesia)
-├── app.py                           # Aplikasi Live Demo Interaktif (Streamlit)
 ├── run_all.py                       # Script reproduksi otomatis 1-perintah
 ├── requirements.txt                 # Daftar pustaka yang dibutuhkan
 ├── README.md                        # Panduan instalasi dan reproduksi
@@ -83,21 +71,7 @@ Semua parameter eksperimen dan *random seeds* tersimpan secara terpusat pada ber
 │       ├── Falkenauer_u120_02.txt
 │       ├── Falkenauer_u120_03.txt
 │       └── Falkenauer_u120_04.txt
-│
-└── results/
-    ├── raw/                         # Rekaman mentah seluruh run independen
-    └── summaries/                   # Tabel agregasi hasil eksperimen
+
 ```
 
 ---
-
-## 📊 5. Rangkuman Hasil Komparasi Eksperimental
-
-| Algoritma | Rata-rata Bin | Rata-rata Gap vs BKS (%) | Rata-rata Waktu (*Runtime*) | Status Validasi |
-| :--- | :---: | :---: | :---: | :---: |
-| **BKS (Optimum)** | 48.40 | 0.00% | - | Optimum Global |
-| **FFD (Greedy)** | 49.00 | 1.26% | 0.0002 detik ($< 1$ ms) | 100% Valid |
-| **Genetic Algorithm (GA)** | 49.56 | 2.39% | 1.1802 detik | 100% Valid |
-| **Particle Swarm (PSO)** | 49.84 | 2.98% | 1.2355 detik | 100% Valid |
-
-*(Diuji pada 5 instans benchmark $\times$ 5 seeds = total 50 runs metaheuristik dengan anggaran 3.000 evaluasi berimbang).*
